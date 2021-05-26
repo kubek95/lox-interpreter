@@ -1,6 +1,9 @@
 #include "Interpreter.hpp"
 #include "Scanner.hpp"
+#include "Token.hpp"
+
 #include <iostream>
+#include <sstream>
 
 namespace lox {
 
@@ -9,7 +12,9 @@ auto Interpreter::runInterpreter(std::string source) -> void
     Scanner scanner{std::move(source)};
     auto tokens = scanner.run();
     for(const auto& token: tokens) {
-        std::cout << EnumToString(token) << '\n';
+        std::ostringstream os;
+        os << token;
+        std::cout << os.str() << '\n';
     } 
 }
 

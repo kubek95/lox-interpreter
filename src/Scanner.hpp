@@ -1,7 +1,7 @@
 #ifndef SCANNER_HPP
 #define SCANNER_HPP
 
-#include "Tokens.hpp"
+#include "Token.hpp"
 #include <string>
 #include <vector>
 
@@ -15,6 +15,7 @@ namespace lox {
 
         private:
             std::string _contentToScan;
+            std::vector<Token> tokens{};
     };
 } // namespace lox
 

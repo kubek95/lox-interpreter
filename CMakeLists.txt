@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(lox_interpreter LANGUAGES CXX VERSION 0.1)
 
+add_compile_options(-std=c++17)
+
 add_library(compiler_warnings INTERFACE)
 
 include(cmake/CompilerWarnings.cmake)

@@ -1,9 +1,10 @@
-#ifndef TOKEN_HPP
-#define TOKEN_HPP
+#pragma once
+
+#include <string>
 
 namespace lox {
 
-enum class Token {
+enum class TokenType {
     LEFT_PAREN, RIGHT_PARTEN, LEFT_BRACE, RIGHT_BRACE,
     COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
     BANG, BANG_EQUAL,
@@ -15,54 +16,52 @@ enum class Token {
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE, END_OF_FILE
 };
 
-inline constexpr const char* EnumToString(Token token)
+inline auto EnumToString(TokenType token) -> std::string
 {
     switch(token) {
 #define CASE(x) case x: return #x
-        CASE(Token::LEFT_PAREN);
-        CASE(Token::RIGHT_PARTEN);
-        CASE(Token::LEFT_BRACE);
-        CASE(Token::RIGHT_BRACE);
-        CASE(Token::COMMA);
-        CASE(Token::DOT);
-        CASE(Token::MINUS);
-        CASE(Token::PLUS);
-        CASE(Token::SEMICOLON);
-        CASE(Token::SLASH);
-        CASE(Token::STAR);
-        CASE(Token::BANG);
-        CASE(Token::BANG_EQUAL);
-        CASE(Token::EQUAL);
-        CASE(Token::EQUAL_EQUAL);
-        CASE(Token::GREATER);
-        CASE(Token::GREATER_EQUAL);
-        CASE(Token::LESS);
-        CASE(Token::LESS_EQUAL);
-        CASE(Token::IDENTIFIER);
-        CASE(Token::STRING);
-        CASE(Token::NUMBER);
-        CASE(Token::AND);
-        CASE(Token::CLASS);
-        CASE(Token::ELSE);
-        CASE(Token::FALSE);
-        CASE(Token::FUN);
-        CASE(Token::FOR);
-        CASE(Token::IF);
-        CASE(Token::NIL);
-        CASE(Token::OR);
-        CASE(Token::PRINT);
-        CASE(Token::RETURN);
-        CASE(Token::THIS);
-        CASE(Token::SUPER);
-        CASE(Token::TRUE);
-        CASE(Token::VAR);
-        CASE(Token::WHILE);
-        CASE(Token::END_OF_FILE);
+        CASE(TokenType::LEFT_PAREN);
+        CASE(TokenType::RIGHT_PARTEN);
+        CASE(TokenType::LEFT_BRACE);
+        CASE(TokenType::RIGHT_BRACE);
+        CASE(TokenType::COMMA);
+        CASE(TokenType::DOT);
+        CASE(TokenType::MINUS);
+        CASE(TokenType::PLUS);
+        CASE(TokenType::SEMICOLON);
+        CASE(TokenType::SLASH);
+        CASE(TokenType::STAR);
+        CASE(TokenType::BANG);
+        CASE(TokenType::BANG_EQUAL);
+        CASE(TokenType::EQUAL);
+        CASE(TokenType::EQUAL_EQUAL);
+        CASE(TokenType::GREATER);
+        CASE(TokenType::GREATER_EQUAL);
+        CASE(TokenType::LESS);
+        CASE(TokenType::LESS_EQUAL);
+        CASE(TokenType::IDENTIFIER);
+        CASE(TokenType::STRING);
+        CASE(TokenType::NUMBER);
+        CASE(TokenType::AND);
+        CASE(TokenType::CLASS);
+        CASE(TokenType::ELSE);
+        CASE(TokenType::FALSE);
+        CASE(TokenType::FUN);
+        CASE(TokenType::FOR);
+        CASE(TokenType::IF);
+        CASE(TokenType::NIL);
+        CASE(TokenType::OR);
+        CASE(TokenType::PRINT);
+        CASE(TokenType::RETURN);
+        CASE(TokenType::THIS);
+        CASE(TokenType::SUPER);
+        CASE(TokenType::TRUE);
+        CASE(TokenType::VAR);
+        CASE(TokenType::WHILE);
+        CASE(TokenType::END_OF_FILE);
     }
     return "<unknown token>";
 #undef CASE
 }
 
 } // namespace lox
-
-#endif // TOKEN_HPP
