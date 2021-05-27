@@ -33,5 +33,14 @@ TEST_F(UtToken, ShouldPrintDoubleTokenCorrectly)
     stringizedToken << uut;
     ASSERT_EQ("TokenType::NUMBER double 2.3", stringizedToken.str());
 }
+
+TEST_F(UtToken, ShouldPrintNullWhenLiteralIsEmpty)
+{
+    Token uut{TokenType::END_OF_FILE, "", std::nullopt, 5};
+    std::ostringstream stringizedToken;
+    stringizedToken << uut;
+    ASSERT_EQ("TokenType::END_OF_FILE  null", stringizedToken.str());
+
+}
 } // namespace ut
 } // namespace lox

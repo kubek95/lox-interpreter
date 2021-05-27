@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <variant>
+#include <optional>
 
 namespace lox {
 
@@ -13,13 +14,13 @@ using LiteralType = std::variant<int,
 class Token
 {
     public:
-        Token(TokenType tokenType, std::string lexeme, LiteralType literal, int line);
+        Token(TokenType tokenType, std::string lexeme, std::optional<LiteralType> literal, int line);
         friend auto operator<<(std::ostringstream& os, Token token) -> std::ostringstream&;
 
     private:
         TokenType _tokenType;
         std::string _lexeme;
-        LiteralType _literal;
+        std::optional<LiteralType> _literal;
         int _line;
 };
 
@@ -31,12 +32,14 @@ inline auto operator<<(std::ostringstream& os, Token token) -> std::ostringstrea
        << token._lexeme
        << std::string{" "};
        
-    if (std::holds_alternative<int>(token._literal)) {
-        os << std::get<int>(token._literal);
-    } else if (std::holds_alternative<double>(token._literal)) {
-        os << std::get<double>(token._literal);
+    if (!token._literal.has_value()) {
+        os << "null";
+    } else if (std::holds_alternative<int>(token._literal.value())) {
+        os << std::get<int>(token._literal.value());
+    } else if (std::holds_alternative<double>(token._literal.value())) {
+        os << std::get<double>(token._literal.value());
     } else {
-        os << std::get<std::string>(token._literal);
+        os << std::get<std::string>(token._literal.value());
     }
     return os;
 }

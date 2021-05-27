@@ -14,7 +14,7 @@ auto extractStringFromFile(std::ifstream& fileStream) -> std::string
     return ostr.str();
 }
 
-
+} // namespace lox
 auto main(int argc, char** argv) -> int
 {
     if(argc > 2) {
@@ -29,7 +29,7 @@ auto main(int argc, char** argv) -> int
             if(command.empty()) {
                 break;
             }
-            Interpreter interpreter;
+            lox::Interpreter interpreter;
             interpreter.runInterpreter(std::move(command));
         }
     } else {
@@ -38,12 +38,10 @@ auto main(int argc, char** argv) -> int
         if (!fileStream.is_open()) {
             return -1;
         }
-        Interpreter interpreter;
-        interpreter.runInterpreter(extractStringFromFile(fileStream));
+        lox::Interpreter interpreter;
+        interpreter.runInterpreter(lox::extractStringFromFile(fileStream));
     }
 
     return 0;
 }
-
-} // namespace lox
 
