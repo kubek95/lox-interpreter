@@ -17,13 +17,13 @@ class UtScanner : public ::testing::Test
 UtScanner::UtScanner()
 {
     errorReporter = std::make_shared<ErrorReporter>();
-    uut = std::make_unique<Scanner>("dummySource", errorReporter);
+    uut = std::make_unique<Scanner>("d<>ummySource", errorReporter);
 }
 
 TEST_F(UtScanner, ShouldReturnEmptyListOfTokens)
 {
-//    auto result = uut->run();
-//    ASSERT_TRUE(result.empty());
+    auto result = uut->run();
+    ASSERT_TRUE(result.empty());
 }
 
 } // namespace ut
