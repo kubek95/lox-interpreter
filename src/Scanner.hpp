@@ -33,6 +33,7 @@ namespace lox {
             auto counsumeNumberInSource() -> void;
             auto identifier() -> void;
             auto determineIdentifierType(const std::string& identifier) const -> TokenType;
+            auto consumeComment() -> void;
 
             std::string _contentToScan;
             std::shared_ptr<ErrorReporter> _errorReporter;

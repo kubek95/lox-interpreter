@@ -18,10 +18,19 @@ class UtScanner : public ::testing::Test
         std::unique_ptr<Scanner> uut;
         std::shared_ptr<ErrorReporter> errorReporter = std::make_shared<ErrorReporter>();
         const std::string allTokensAsString = 
-            R"tokens((){},.-+;/*!!===>>=<<==identifierExample"string"2.2
+            R"tokens((){},.-+;*/!!===>>=<<==identifierExample"string"2.2
             and class else false fun for if nil or print return
-            this super true var while //comment)tokens";
-            std::vector<Token> expectedTokens {
+            this super true var while //comment class else)tokens";
+        const std::string cStyleComment = 
+            R"comment(class elser /*class dsdfa*/
+            /*super comment asdf
+             */)comment";
+        std::vector<Token> expectedCommentTokens {
+            {TokenType::CLASS, "class", std::nullopt, 1},
+            {TokenType::IDENTIFIER, "elser", std::nullopt, 1},
+            {TokenType::END_OF_FILE, "", std::nullopt, 3}
+        };
+        std::vector<Token> expectedTokens {
                 {TokenType::LEFT_PAREN, "(", std::nullopt, 1},
                 {TokenType::RIGHT_PAREN, ")", std::nullopt, 1},
                 {TokenType::LEFT_BRACE, "{", std::nullopt, 1},
@@ -31,8 +40,8 @@ class UtScanner : public ::testing::Test
                 {TokenType::MINUS, "-", std::nullopt, 1},
                 {TokenType::PLUS, "+", std::nullopt, 1},
                 {TokenType::SEMICOLON, ";", std::nullopt, 1},
-                {TokenType::SLASH, "/", std::nullopt, 1},
                 {TokenType::STAR, "*", std::nullopt, 1},
+                {TokenType::SLASH, "/", std::nullopt, 1},
                 {TokenType::BANG, "!", std::nullopt, 1},
                 {TokenType::BANG_EQUAL, "!=", std::nullopt, 1},
                 {TokenType::EQUAL_EQUAL, "==", std::nullopt, 1},
@@ -89,9 +98,15 @@ TEST_F(UtScanner, ShouldReturnEmptyListOfTokens)
 {
     initializeScanner(allTokensAsString);
     auto result = uut->run();
-    printMismatched(expectedTokens, result);
     EXPECT_THAT(result, ::testing::ContainerEq(expectedTokens));
 }
 
+TEST_F(UtScanner, ShouldReturnIgnoreComments)
+{
+    initializeScanner(cStyleComment);
+    auto result = uut->run();
+    printMismatched(expectedCommentTokens, result);
+    EXPECT_THAT(result, ::testing::ContainerEq(expectedCommentTokens));
+}
 } // namespace ut
 } // namespace lox

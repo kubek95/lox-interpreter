@@ -77,7 +77,7 @@ auto Scanner::matchNext(char expected) -> bool
 
 auto Scanner::peek() const -> char
 {
-    return isAtEnd() ? '\n' : _contentToScan.at(_current);
+    return isAtEnd() ? '\0' : _contentToScan.at(_current);
 }
 
 auto Scanner::scanString() -> void
@@ -137,6 +137,24 @@ auto Scanner::identifier() -> void
     addToken(determineIdentifierType(identifier));
 }
 
+auto Scanner::consumeComment() -> void
+{
+    auto closingMarkPresent =[this]{return peek() == '*' && peekNext() == '/';}; 
+    auto newLine = [this]{return peek() == '\n';};
+    while (!closingMarkPresent() && !isAtEnd()) {
+        if (newLine()) {
+            ++_line;
+        }
+        advance();
+    }
+    if (isAtEnd()) {
+        _errorReporter->error(_line, "Invalid C-style comment");
+        return;
+    }
+    advance();
+    advance();
+}
+
 auto Scanner::scanToken() -> void
 {
     char c = advance();
@@ -160,6 +178,8 @@ auto Scanner::scanToken() -> void
                 while (peek() != '\n' && !isAtEnd()) {
                     advance();
                 } 
+            } else if (matchNext('*')) {
+                consumeComment();
             } else {
                 addToken(TokenType::SLASH);
             }
