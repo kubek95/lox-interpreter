@@ -8,13 +8,13 @@
 
 namespace lox {
 
-using LiteralType = std::variant<int,
-                                 std::string,
+using LiteralType = std::variant<std::string,
                                  double>;
 class Token
 {
     public:
         Token(TokenType tokenType, std::string lexeme, std::optional<LiteralType> literal, int line);
+        auto operator==(const Token& rhs) const -> bool;
         friend auto operator<<(std::ostringstream& os, Token token) -> std::ostringstream&;
 
     private:
@@ -34,13 +34,13 @@ inline auto operator<<(std::ostringstream& os, Token token) -> std::ostringstrea
        
     if (!token._literal.has_value()) {
         os << "null";
-    } else if (std::holds_alternative<int>(token._literal.value())) {
-        os << std::get<int>(token._literal.value());
     } else if (std::holds_alternative<double>(token._literal.value())) {
         os << std::get<double>(token._literal.value());
     } else {
         os << std::get<std::string>(token._literal.value());
     }
+    os << " ";
+    os << token._line;
     return os;
 }
 

@@ -5,7 +5,7 @@
 namespace lox {
 
 enum class TokenType {
-    LEFT_PAREN, RIGHT_PARTEN, LEFT_BRACE, RIGHT_BRACE,
+    LEFT_PAREN, RIGHT_PAREN, LEFT_BRACE, RIGHT_BRACE,
     COMMA, DOT, MINUS, PLUS, SEMICOLON, SLASH, STAR,
     BANG, BANG_EQUAL,
     EQUAL, EQUAL_EQUAL,
@@ -21,7 +21,7 @@ inline auto EnumToString(TokenType token) -> std::string
     switch(token) {
 #define CASE(x) case x: return #x
         CASE(TokenType::LEFT_PAREN);
-        CASE(TokenType::RIGHT_PARTEN);
+        CASE(TokenType::RIGHT_PAREN);
         CASE(TokenType::LEFT_BRACE);
         CASE(TokenType::RIGHT_BRACE);
         CASE(TokenType::COMMA);

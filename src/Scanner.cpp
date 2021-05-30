@@ -14,6 +14,7 @@ const std::unordered_map<std::string, TokenType> Scanner::_keywords {
     {"false", TokenType::FALSE},
     {"for", TokenType::FOR},
     {"if", TokenType::IF},
+    {"fun", TokenType::FUN},
     {"nil", TokenType::NIL},
     {"or", TokenType::OR},
     {"print", TokenType::PRINT},
@@ -92,7 +93,7 @@ auto Scanner::scanString() -> void
         return;
     }
     advance();
-    addToken(TokenType::STRING, _contentToScan.substr(_start+1, _current - _start));
+    addToken(TokenType::STRING, _contentToScan.substr(_start+1, _current - _start - 2));
 }
 
 auto Scanner::peekNext() const -> char
@@ -141,9 +142,9 @@ auto Scanner::scanToken() -> void
     char c = advance();
     switch(c) {
         case '(': addToken(TokenType::LEFT_PAREN); break;
-        case ')': addToken(TokenType::RIGHT_PARTEN); break;
-        case '{': addToken(TokenType::RIGHT_BRACE); break;
-        case '}': addToken(TokenType::LEFT_BRACE); break;
+        case ')': addToken(TokenType::RIGHT_PAREN); break;
+        case '{': addToken(TokenType::LEFT_BRACE); break;
+        case '}': addToken(TokenType::RIGHT_BRACE); break;
         case ',': addToken(TokenType::COMMA); break;
         case '.': addToken(TokenType::DOT); break;
         case '-': addToken(TokenType::MINUS); break;

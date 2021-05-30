@@ -15,15 +15,7 @@ TEST_F(UtToken, ShouldPrintStringTokenContentCorrectly)
     Token uut{TokenType::AND, "lexeme", "35", 1};
     std::ostringstream stringizedToken;
     stringizedToken << uut;
-    ASSERT_EQ("TokenType::AND lexeme 35", stringizedToken.str());
-}
-
-TEST_F(UtToken, ShouldPrintIntTokenContentCorrectly)
-{
-    Token uut{TokenType::NUMBER, "numb", 43, 1};
-    std::ostringstream stringizedToken;
-    stringizedToken << uut;
-    ASSERT_EQ("TokenType::NUMBER numb 43", stringizedToken.str());
+    ASSERT_EQ("TokenType::AND lexeme 35 1", stringizedToken.str());
 }
 
 TEST_F(UtToken, ShouldPrintDoubleTokenCorrectly)
@@ -31,7 +23,7 @@ TEST_F(UtToken, ShouldPrintDoubleTokenCorrectly)
     Token uut{TokenType::NUMBER, "double", 2.3, 4};
     std::ostringstream stringizedToken;
     stringizedToken << uut;
-    ASSERT_EQ("TokenType::NUMBER double 2.3", stringizedToken.str());
+    ASSERT_EQ("TokenType::NUMBER double 2.3 4", stringizedToken.str());
 }
 
 TEST_F(UtToken, ShouldPrintNullWhenLiteralIsEmpty)
@@ -39,7 +31,7 @@ TEST_F(UtToken, ShouldPrintNullWhenLiteralIsEmpty)
     Token uut{TokenType::END_OF_FILE, "", std::nullopt, 5};
     std::ostringstream stringizedToken;
     stringizedToken << uut;
-    ASSERT_EQ("TokenType::END_OF_FILE  null", stringizedToken.str());
+    ASSERT_EQ("TokenType::END_OF_FILE  null 5", stringizedToken.str());
 
 }
 } // namespace ut
